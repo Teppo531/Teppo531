@@ -1,0 +1,194 @@
+ <!DOCTYPE html>
+
+<!--made by Teppo Särkkä-->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click a word and then a symbol that is related to it.</title>
+    <style>
+
+        body { font-family: Arial, sans-serif; text-align: center; }
+        h1 { font-size: 24px; }
+        .container { display: flex; justify-content: center; flex-wrap: wrap; }
+        .box { border: 1px solid #000; margin: 10px; padding: 10px; width: 100px; cursor: pointer; }
+        .matched { visibility: hidden; }
+        .word-box { font-size: 15px; }
+        .symbol-box { font-size: 40px; }
+        button { margin: 20px; padding: 10px 20px; font-size: 16px; }
+        hr { width: 80%; margin: 20px auto; border: 1px solid #000; }
+    </style>
+</head>
+<body>
+    <h1>Click a word and then a symbol that is related to it.</h1>
+    <button onclick="changeLanguage('en')">English</button>
+    <button onclick="changeLanguage('fi')">Finnish</button>
+    <div id="words" class="container"></div>
+    <hr>
+    <div id="symbols" class="container"></div>
+
+    <script>
+        const englishWordsArray = [
+             "Sun", "Moon", "Star", "Tree", "Flower", "House", "Cat", "Dog", "Bird", "Fish",
+            "Car", "Plane", "Boat", "Train", "Book", "Chair", "Table", "Phone", "Laptop", "Clock",
+            "Heart", "Key", "Ring", "Watch", "Pen", "Lamp", "Bag", "Hat", "Shoes", "Dress",
+            "Bike", "Bus", "Truck", "Van", "Helicopter", "Rocket", "Spaceship", "Planet", "Comet", "Galaxy",
+            "Mountain", "River", "Lake", "Ocean", "Beach", "Desert", "Forest", "Jungle", "Safari", "Park",
+            "Cup", "Plate", "Bowl", "Spoon", "Fork", "Knife", "Bottle", "Glass", "Mug", "Can",
+            "Bread", "Butter", "Cheese", "Milk", "Eggs", "Meat", "Fruit", "Vegetable", "Pizza", "Burger",
+            "Music", "Song", "Dance", "Art", "Painting", "Drawing", "Sculpture", "Poem", "Story", "Novel",
+            "Actor", "Actress", "Singer", "Dancer", "Painter", "Writer", "Poet", "Director", "Producer", "Editor",
+            "Doctor", "Nurse", "Teacher", "Student", "Engineer", "Scientist", "Lawyer", "Judge", "Pilot", "Chef"
+     
+        ];
+
+        const finnishWordsArray = [
+    "Aurinko", "Kuu", "Tähti", "Puu", "Kukka", "Talo", "Kissa", "Koira", "Lintu", "Kala",
+    "Auto", "Lentokone", "Vene", "Juna", "Kirja", "Tuoli", "Pöytä", "Puhelin", "Kannettava", "Kello",
+    "Sydän", "Avain", "Sormus", "Kello", "Kynä", "Lamppu", "Laukku", "Hattu", "Kengät", "Mekko",
+    "Polkupyörä", "Bussi", "Kuorma-auto", "Pakettiauto", "Helikopteri", "Raketti", "Avaruusalus", "Planeetta", "Komeetta", "Galaksi",
+    "Vuori", "Joki", "Järvi", "Meri", "Ranta", "Aavikko", "Metsä", "Viidakko", "Safari", "Puisto",
+    "Kuusi", "Lautanen", "Kulho", "Lusikka", "Haarukka", "Veitsi", "Pullo", "Lasi", "Muki", "Tölkki",
+    "Leipä", "Voi", "Juusto", "Maito", "Munat", "Liha", "Hedelmä", "Vihannes", "Pizza", "Hampurilainen",
+    "Musiikki", "Laulu", "Tanssi", "Taide", "Maalaus", "Piirustus", "Veistos", "Runo", "Tarina", "Romaani",
+    "Näyttelijä", "Näyttelijätär", "Laulaja", "Tanssija", "Maalaaja", "Kirjailija", "Runoilija", "Ohjaaja", "Tuottaja", "Toimittaja",
+    "Lääkäri", "Sairaanhoitaja", "Opettaja", "Oppilas", "Insinööri", "Tutkija", "Lakimies", "Tuomari", "Lentäjä", "Kokki"
+];
+
+
+        const symbolsArray = [
+            "☀️", "🌕", "⭐", "🌳", "🌼", "🏠", "🐱", "🐶", "🐦", "🐟",
+            "🚗", "✈️", "⛵", "🚆", "📚", "🪑", "🛋️", "📱", "💻", "⏰",
+            "❤️", "🔑", "💍", "⌚", "🖊️", "💡", "👜", "🎩", "👞", "👗",
+            "🚴", "🚌", "🚚", "🚐", "🚁", "🚀", "🛸", "🌍", "☄️", "🌌",
+            "⛰️", "🏞️", "🏝️", "🌊", "🏖️", "🏜️", "🌲", "🌴", "🐘", "🏞️",
+            "☕", "🍽️", "🍜", "🥄", "🍴", "🔪", "🍼", "🥛", "🍺", "🥫",
+            "🍞", "🧈", "🧀", "🥛", "🥚", "🍖", "🍇", "🥕", "🍕", "🍔",
+            "🎵", "🎶", "💃", "🖼️", "🖌️", "🎨", "🗿", "📜", "📖", "📙",
+            "🎬", "🎥", "🎤", "👯", "👨‍🎨", "✍️", "👩‍🎨", "🎭", "🎦", "📷",
+            "👩‍⚕️", "👨‍⚕️", "👨‍🏫", "👩‍🎓", "👨‍🔧", "👩‍🔬", "👩‍⚖️", "👨‍⚖️", "👨‍✈️", "👩‍🍳"
+   
+        ];
+
+        let wordsArray = englishWordsArray;
+        let currentWords = [];
+        let currentSymbols = [];
+        let matchesFound = 0;
+        let wordSelection = null;
+
+        function generateRandomSet() {
+            currentWords = [];
+            currentSymbols = [];
+            while (currentWords.length < 20) {
+                const index = Math.floor(Math.random() * wordsArray.length);
+                if (!currentWords.includes(wordsArray[index])) {
+                    currentWords.push(wordsArray[index]);
+                    currentSymbols.push(symbolsArray[index]);
+                }
+            }
+            renderGame();
+        }
+
+        function renderGame() {
+            const wordsContainer = document.getElementById("words");
+            const symbolsContainer = document.getElementById("symbols");
+
+            wordsContainer.innerHTML = "";
+            symbolsContainer.innerHTML = "";
+
+            currentWords.forEach((word, index) => {
+                const wordBox = document.createElement("div");
+                wordBox.className = "box word-box";
+                wordBox.textContent = word;
+                wordBox.dataset.index = index;
+                wordBox.onclick = () => selectWord(index);
+                wordsContainer.appendChild(wordBox);
+            });
+
+            currentSymbols.sort(() => 0.5 - Math.random()); // Shuffle symbols
+
+            currentSymbols.forEach((symbol, index) => {
+                const symbolBox = document.createElement("div");
+                symbolBox.className = "box symbol-box";
+                symbolBox.textContent = symbol;
+                symbolBox.dataset.index = index;
+                symbolBox.onclick = () => selectSymbol(index);
+                symbolsContainer.appendChild(symbolBox);
+            });
+        }
+
+        function selectWord(index) {
+            if (wordSelection === null) {
+                wordSelection = index;
+                highlightSelected("word", index);
+            }
+        }
+
+        function selectSymbol(index) {
+            if (wordSelection !== null) {
+                const selectedWord = currentWords[wordSelection];
+                const matchingSymbol = symbolsArray[wordsArray.indexOf(selectedWord)];
+
+                if (currentSymbols[index] === matchingSymbol) {
+                    markAsMatched("word", wordSelection);
+                    markAsMatched("symbol", index);
+                    matchesFound++;
+                    if (matchesFound === 20) {
+                        if (wordsArray.length > 0) {
+                            setTimeout(() => {
+                                matchesFound = 0;
+                                generateRandomSet();
+                            }, 500);
+                        } else {
+                            alert("Congratulations! You've matched all the pairs!");
+                        }
+                    }
+                } else {
+                //    alert("Incorrect match! Try again.");
+                }
+                wordSelection = null;
+                removeHighlight("word");
+            }
+        }
+
+        function highlightSelected(type, index) {
+            const boxes = document.querySelectorAll(`.${type}-box`);
+            if (boxes[index]) {
+                boxes.forEach(box => box.classList.remove("selected"));
+                boxes[index].classList.add("selected");
+            }
+        }
+
+        function markAsMatched(type, index) {
+            const boxes = document.querySelectorAll(`.${type}-box`);
+            if (boxes[index]) {
+                boxes[index].classList.add("matched");
+            }
+        }
+
+        function removeHighlight(type) {
+            const boxes = document.querySelectorAll(`.${type}-box`);
+            boxes.forEach(box => box.classList.remove("selected"));
+        }
+
+        function changeLanguage(lang) {
+    if (lang === 'en') {
+        wordsArray = englishWordsArray;
+        document.querySelector('title').textContent = "Click a word and then a symbol that is related to it.";
+        document.querySelector('h1').textContent = "Click a word and then a symbol that is related to it.";
+    } else if (lang === 'fi') {
+        wordsArray = finnishWordsArray;
+        document.querySelector('title').textContent = "Klikkaa sanaa ja sitten siihen liittyvää symbolia.";
+        document.querySelector('h1').textContent = "Klikkaa sanaa ja sitten siihen liittyvää symbolia.";
+    }
+    matchesFound = 0;
+    wordSelection = null;
+    generateRandomSet();
+}
+
+
+        generateRandomSet();
+    </script>
+</body>
+</html>

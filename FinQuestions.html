@@ -1,0 +1,554 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Finnish Questions</title>
+  <style>
+
+/* Select the game element by its id */
+#game {
+  /* Set the width and height of the game element */
+  width: 800px;
+  height: 600px;
+  /* Center the game element horizontally and vertically */
+  margin: auto;
+  /* Add a border around the game element */
+  border: 2px solid black;
+}
+
+/* Select all button elements inside the game element */
+#game button {
+  /* Set the width and height of the buttons */
+  width: 200px;
+  height: 100px;
+  /* Set the font size and color of the buttons */
+  font-size: 20px;
+  color: white;
+  /* Set the background color of the buttons */
+  background-color: blue;
+  /* Add some padding and margin around the buttons */
+  padding: 10px;
+  margin: 10px;
+}
+
+/* Select all paragraph elements inside the game element */
+#game p {
+  /* Set the font size and color of the paragraphs */
+  font-size: 18px;
+  color: black;
+}
+
+/* Use a media query to change the style for smaller screens */
+@media (max-width: 600px) {
+  /* Select the game element by its id */
+  #game {
+    /* Reduce the width and height of the game element */
+    width: 400px;
+    height: 300px;
+    /* Reduce the border width of the game element */
+    border-width: 1px;
+    /* Change the background color of the game element */
+    background-color: lightgray;
+  }
+
+  /* Select all button elements inside the game element */
+  #game button {
+    /* Reduce the width and height of the buttons */
+    width: 100px;
+    height: 25px;
+    /* Reduce the font size and padding of the buttons */
+    font-size: 10px;
+    padding: 5px;
+    /* Change the background color of the buttons */
+    background-color: green;
+    /* Add some border radius to make the buttons rounder */
+    border-radius: 10px;
+    /* Add some box shadow to make the buttons look more realistic */
+    box-shadow: inset -2px -2px rgba(0,0,0,0.2), inset 2px 2px rgba(255,255,255,0.2);
+    /* Add some transition effect to make the buttons change color when hovered over */
+    transition: background-color .3s ease-in-out;
+    
+}
+
+/* Select all button elements inside the game element when they are hovered over */
+#game button:hover {
+   /* Change the background color of the buttons when hovered over */
+   background-color: yellow; 
+}
+
+</style>
+  <script>
+      window.onload = () => {
+// This is a comment in JavaScript
+// Declare a variable to store the game element
+var game = document.getElementById("game");
+// Declare a variable to store the current question
+var question = 0;
+// Declare an array to store the questions and answers
+var questions = [
+  {
+    // The first question is in Finnish
+    text: "Hei, mitä kuuluu?",
+    // The possible answers are in English
+    answers: [
+      "Hello, how are you?",
+      "Hello, where are you from?",
+      "Hello, what is your name?",
+      "Hello, do you speak English?"
+    ],
+    // The correct answer is the first one
+    correct: 0
+  },
+  {
+    // The second question is in English
+    text: "What does \"kiitos\" mean in Finnish?",
+    // The possible answers are in Finnish
+    answers: [
+      "Please",
+      "Sorry",
+      "Thanks",
+      "Goodbye"
+    ],
+    // The correct answer is the third one
+    correct: 2
+  },
+  {
+    // The third question is in Finnish
+    text: "Mistä olet kotoisin?",
+    // The possible answers are in English
+    answers: [
+      "Where are you staying?",
+      "Where are you going?",
+      "Where are you from?",
+      "Where do you work?"
+    ],
+    // The correct answer is the third one
+    correct: 2
+  },
+  
+  { text: "Hyvää huomenta", answers: [ "Good morning", "Good evening", "Good night", "Good day" ], correct: 0 },
+  {
+  text: "Mikä on sinun nimesi?",
+  answers: [
+    "What is your name?",
+    "Where is your house?",
+    "What is your age?",
+    "Where are you going?"
+  ],
+  correct: 0
+},
+{
+  text: "Missä sinä asut?",
+  answers: [
+    "Where do you live?",
+    "What is your name?",
+    "Where is your car?",
+    "What is your age?"
+  ],
+  correct: 0
+},
+{
+  text: "Kuinka vanha sinä olet?",
+  answers: [
+    "How old are you?",
+    "What is your name?",
+    "Where do you live?",
+    "Where are you going?"
+  ],
+  correct: 0
+},
+{
+  text: "Minulla on nälkä",
+  answers: [
+    "I am hungry",
+    "I am tired",
+    "I am happy",
+    "I am sad"
+  ],
+  correct: 0
+},
+
+{ text: "Hyvää päivää, miten menee?", answers: [ "Good day, how's it going?", "Good day, where are you from?", "Good day, what is your name?", "Good day, do you speak English?" ], correct: 0 },
+// Add more questions in the same manner
+{
+
+  // The fourth question is in English
+
+  text: "How do you say \"goodbye\" in Finnish?",
+
+  // The possible answers are in Finnish
+
+  answers: [
+
+    "Näkemiin",
+
+    "Hyvää yötä",
+
+    "Terveisiä",
+
+    "All of the above"
+
+  ],
+
+  // The correct answer is the fourth one
+
+  correct: 0
+
+},
+
+{
+
+  // The fifth question is in Finnish
+
+  text: "What does this mean in english: \"Olen kotoisin Suomesta\"?",
+
+  // The possible answers are in English
+
+  answers: [
+
+    "I live in Finland",
+
+    "I like Finland",
+
+    "I am from Finland",
+
+    "I work in Finland"
+
+  ],
+
+  // The correct answer is the third one
+
+  correct: 2
+
+},
+
+{
+
+  // The sixth question is in English
+
+  text: "What is the capital of Finland?",
+
+  // The possible answers are in Finnish
+
+  answers: [
+
+    "Turku",
+
+    "Tampere",
+
+    "Helsinki",
+
+    "Oulu"
+
+  ],
+
+  // The correct answer is the third one
+
+  correct: 2
+
+},
+
+{
+
+  // The seventh question is in Finnish
+
+  text: "Kuinka sanotaan \"sorry\" suomeksi?",
+
+  // The possible answers are in English
+
+  answers: [
+
+    "Pyydän",
+
+    "Kiitos",
+
+    "Anteeksi",
+
+    "Olkaa hyvä"
+
+  ],
+
+  // The correct answer is the first one
+
+  correct: 2
+
+},
+
+
+{
+
+  // The ninth question is in Finnish
+
+  text: "Mitä \"hyvää huomenta\" tarkoittaa englanniksi?",
+
+  // The possible answers are in English
+
+  answers: [
+
+    "Good morning",
+
+    "Good afternoon",
+
+    "Good evening",
+
+    "Good night"
+
+  ],
+
+  // The correct answer is the first one
+
+  correct: 0
+
+},
+
+
+{
+
+   // The twelfth question is in English 
+
+   text: 'What does "tervetuloa" mean in Finnish?',
+
+   // The possible answers are in Finnish 
+
+   answers: [
+
+     "Hello",
+
+     "Welcome",
+
+     "Goodbye",
+
+     "Thank you"
+
+   ],
+
+   // The correct answer is the second one 
+
+   correct:1 
+
+},
+
+{
+
+   // The thirteenth question is in Finnish 
+
+   text: "Mitä sinä opiskelet?",
+
+   // The possible answers are in English 
+
+   answers: [
+
+     "What do you study?",
+
+     "What do you like?",
+
+     "What do you do?",
+
+     "What do you hobby?"
+
+   ],
+
+   // The correct answer is the fourth one 
+
+   correct:0
+
+},
+
+{
+
+   // The fourteenth question is in English 
+
+   text: "How do you say \"cheers\" in Finnish?",
+
+   // The possible answers are in Finnish 
+
+   answers: [
+
+     "Kippis",
+
+     "Skål",
+
+     "Prost",
+
+     "Salud"
+
+   ],
+
+   // The correct answer is the first one 
+
+   correct:0 
+
+},
+
+{
+
+   // The fifteenth question is in Finnish 
+
+   text: "Mikä on Suomen kansalliseläin?",
+
+   // The possible answers are in English 
+
+   answers: [
+
+     "Bear",
+
+     "Moose",
+
+     "Wolf",
+
+     "Lion"
+
+   ],
+
+   // The correct answer is the first one 
+
+   correct:0 
+
+},
+
+{
+
+   // The sixteenth question is in English 
+
+   text: "What is the Finnish word for \"sauna\"?",
+
+   // The possible answers are in Finnish 
+
+   answers: [
+
+     "Sauna",
+
+     "Löyly",
+
+     "Kiuas",
+
+     "Vihta"
+
+   ],
+
+   // The correct answer is the first one 
+
+   correct:0 
+
+},
+
+{
+
+   // The seventeenth question is in Finnish 
+
+   text: "Mitä värejä edustaa Suomen lippu?",
+
+   // The possible answers are in English 
+
+   answers: [
+
+     "Red and white",
+
+     "Blue and white",
+
+     "Green and white",
+
+     "Yellow and white"
+
+   ],
+
+   // The correct answer is the second one 
+
+   correct:1 
+
+},
+
+{
+
+   // The eighteenth question is in English 
+
+   text: "How do you ask \"How are you?\" in Finnish?",
+
+   // The possible answers are in Finnish 
+
+   answers: [
+
+     "Mitä kuuluu?",
+
+     "Miten menee?",
+
+     "Mitä sinulle kuuluu?",
+
+     "All of the above"
+
+   ],
+
+   // The correct answer is the fourth one 
+
+   correct:3 
+
+}
+
+
+
+
+];
+
+// Declare a function to display the question and answers
+function displayQuestion() {
+  // Clear the game element of any previous content
+  game.innerHTML = "";
+  // Create a paragraph element to display the question text
+  var p = document.createElement("p");
+  // Set the text content of the paragraph element to the current question text
+  p.textContent = questions[question].text;
+  // Append the paragraph element to the game element
+  game.appendChild(p);
+  // Loop through the possible answers of the current question
+  for (var i = 0; i < questions[question].answers.length; i++) {
+    // Create a button element for each answer
+    var button = document.createElement("button");
+    // Set the text content of the button element to the answer text
+    button.textContent = questions[question].answers[i];
+    // Set the value attribute of the button element to the answer index
+    button.setAttribute("value", i);
+    // Add an event listener to the button element that will check the answer when clicked
+    button.addEventListener("click", checkAnswer);
+    // Append the button element to the game element
+    game.appendChild(button);
+  }
+}
+
+// Declare a function to check the answer and give feedback
+function checkAnswer(event) {
+  // Get the value of the clicked button element
+  var value = event.target.value;
+  // Compare the value with the correct answer of the current question
+  if (value == questions[question].correct) {
+    // If they match, display a positive message and increase the question index by one
+    alert("Correct! Well done!");
+    question++;
+  } else {
+    // If they don't match, display a negative message and keep the question index unchanged
+    alert("Wrong! Try again!");
+  }
+  
+  // Check if there are more questions left in the array
+  if (question < questions.length) {
+     // If yes, display the next question 
+     displayQuestion();
+   } else {
+     // If no, display a final message and end the game 
+     alert("You have completed the game! Congratulations!");
+     game.innerHTML = "<p>Thank you for playing!</p>";
+   }
+}
+
+// Call the displayQuestion function to start the game 
+window.onload = displayQuestion();
+}
+</script>
+</head>
+<body>
+  <div id="game">
+    <!-- Your game elements will go here -->
+  </div>
+</body>
+</html>
+

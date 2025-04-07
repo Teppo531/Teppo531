@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Symbol Story Game</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+    .symbols { display: flex; justify-content: center; margin: 20px 0; }
+    .symbol { font-size: 50px; margin: 0 10px; cursor: pointer; }
+    .symbol:hover { transform: scale(1.2); }
+    .story { margin-top: 30px; font-size: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Select one symbol of each type</h1>
+  <div id="animal" class="symbols"></div>
+<hr>
+  <div id="nature" class="symbols"></div>
+ <hr>
+  <div id="food" class="symbols"></div>
+  <div class="story" id="story"></div>
+  <br><br>
+  <script>
+    const themes = {
+  animal: ['🐶', '🐱', '🐭', '🐹'],
+  nature: ['🌲', '🌸', '🌼', '🍂'],
+  food: ['🍎', '🍌', '🍔', '🍕']
+};
+
+const stories = {
+  "🐶🌲🍎": "A puppy and a pine tree enjoyed apples together in the forest.",
+  "🐶🌲🍌": "A puppy and a pine tree enjoyed bananas together in the forest.",
+  "🐶🌲🍔": "A puppy and a pine tree enjoyed burgers together in the forest.",
+  "🐶🌲🍕": "A puppy and a pine tree enjoyed pizza together in the forest.",
+  "🐶🌸🍎": "A puppy and a blooming flower enjoyed apples together in the garden.",
+  "🐶🌸🍌": "A puppy and a blooming flower enjoyed bananas together in the garden.",
+  "🐶🌸🍔": "A puppy and a blooming flower enjoyed burgers together in the garden.",
+  "🐶🌸🍕": "A puppy and a blooming flower enjoyed pizza together in the garden.",
+  "🐶🌼🍎": "A puppy and a daisy enjoyed apples together in the meadow.",
+  "🐶🌼🍌": "A puppy and a daisy enjoyed bananas together in the meadow.",
+  "🐶🌼🍔": "A puppy and a daisy enjoyed burgers together in the meadow.",
+  "🐶🌼🍕": "A puppy and a daisy enjoyed pizza together in the meadow.",
+  "🐶🍂🍎": "A puppy and autumn leaves enjoyed apples together in the park.",
+  "🐶🍂🍌": "A puppy and autumn leaves enjoyed bananas together in the park.",
+  "🐶🍂🍔": "A puppy and autumn leaves enjoyed burgers together in the park.",
+  "🐶🍂🍕": "A puppy and autumn leaves enjoyed pizza together in the park.",
+  "🐱🌲🍎": "A cat and a pine tree enjoyed apples together in the forest.",
+  "🐱🌲🍌": "A cat and a pine tree enjoyed bananas together in the forest.",
+  "🐱🌲🍔": "A cat and a pine tree enjoyed burgers together in the forest.",
+  "🐱🌲🍕": "A cat and a pine tree enjoyed pizza together in the forest.",
+  // Continue for all possible combinations
+  "🐱🌸🍎": "A cat and a blooming flower enjoyed apples together in the garden.",
+  "🐱🌸🍌": "A cat and a blooming flower enjoyed bananas together in the garden.",
+  "🐱🌸🍔": "A cat and a blooming flower enjoyed burgers together in the garden.",
+  "🐱🌸🍕": "A cat and a blooming flower enjoyed pizza together in the garden.",
+  "🐱🌼🍎": "A cat and a daisy enjoyed apples together in the meadow.",
+  "🐱🌼🍌": "A cat and a daisy enjoyed bananas together in the meadow.",
+  "🐱🌼🍔": "A cat and a daisy enjoyed burgers together in the meadow.",
+  "🐱🌼🍕": "A cat and a daisy enjoyed pizza together in the meadow.",
+  "🐱🍂🍎": "A cat and autumn leaves enjoyed apples together in the park.",
+  "🐱🍂🍌": "A cat and autumn leaves enjoyed bananas together in the park.",
+  "🐱🍂🍔": "A cat and autumn leaves enjoyed burgers together in the park.",
+  "🐱🍂🍕": "A cat and autumn leaves enjoyed pizza together in the park.",
+  "🐭🌲🍎": "A mouse and a pine tree enjoyed apples together in the forest.",
+  "🐭🌲🍌": "A mouse and a pine tree enjoyed bananas together in the forest.",
+  "🐭🌲🍔": "A mouse and a pine tree enjoyed burgers together in the forest.",
+  "🐭🌲🍕": "A mouse and a pine tree enjoyed pizza together in the forest.",
+  "🐭🌸🍎": "A mouse and a blooming flower enjoyed apples together in the garden.",
+  "🐭🌸🍌": "A mouse and a blooming flower enjoyed bananas together in the garden.",
+  "🐭🌸🍔": "A mouse and a blooming flower enjoyed burgers together in the garden.",
+  "🐭🌸🍕": "A mouse and a blooming flower enjoyed pizza together in the garden.",
+  "🐭🌼🍎": "A mouse and a daisy enjoyed apples together in the meadow.",
+  "🐭🌼🍌": "A mouse and a daisy enjoyed bananas together in the meadow.",
+  "🐭🌼🍔": "A mouse and a daisy enjoyed burgers together in the meadow.",
+  "🐭🌼🍕": "A mouse and a daisy enjoyed pizza together in the meadow.",
+  "🐭🍂🍎": "A mouse and autumn leaves enjoyed apples together in the park.",
+  "🐭🍂🍌": "A mouse and autumn leaves enjoyed bananas together in the park.",
+  "🐭🍂🍔": "A mouse and autumn leaves enjoyed burgers together in the park.",
+  "🐭🍂🍕": "A mouse and autumn leaves enjoyed pizza together in the park.",
+  "🐹🌲🍎": "A hamster and a pine tree enjoyed apples together in the forest.",
+  "🐹🌲🍌": "A hamster and a pine tree enjoyed bananas together in the forest.",
+  "🐹🌲🍔": "A hamster and a pine tree enjoyed burgers together in the forest.",
+  "🐹🌲🍕": "A hamster and a pine tree enjoyed pizza together in the forest.",
+  "🐹🌸🍎": "A hamster and a blooming flower enjoyed apples together in the garden.",
+  "🐹🌸🍌": "A hamster and a blooming flower enjoyed bananas together in the garden.",
+  "🐹🌸🍔": "A hamster and a blooming flower enjoyed burgers together in the garden.",
+  "🐹🌸🍕": "A hamster and a blooming flower enjoyed pizza together in the garden.",
+  "🐹🌼🍎": "A hamster and a daisy enjoyed apples together in the meadow.",
+  "🐹🌼🍌": "A hamster and a daisy enjoyed bananas together in the meadow.",
+  "🐹🌼🍔": "A hamster and a daisy enjoyed burgers together in the meadow.",
+  "🐹🌼🍕": "A hamster and a daisy enjoyed pizza together in the meadow.",
+  "🐹🍂🍎": "A hamster and autumn leaves enjoyed apples together in the park.",
+  "🐹🍂🍌": "A hamster and autumn leaves enjoyed bananas together in the park.",
+  "🐹🍂🍔": "A hamster and autumn leaves enjoyed burgers together in the park.",
+  "🐹🍂🍕": "A hamster and autumn leaves enjoyed pizza together in the park."
+};
+
+// The rest of the game logic remains unchanged
+
+
+
+    const selectedSymbols = { animal: '', nature: '', food: '' };
+
+    const createSymbolElements = (theme) => {
+      themes[theme].forEach(symbol => {
+        const span = document.createElement('span');
+        span.textContent = symbol;
+        span.className = 'symbol';
+        span.onclick = () => selectSymbol(theme, symbol);
+        document.getElementById(theme).appendChild(span);
+      });
+    };
+
+    const selectSymbol = (theme, symbol) => {
+  selectedSymbols[theme] = symbol;
+  highlightSelectedSymbol(theme);
+  if (Object.values(selectedSymbols).every(val => val !== '')) {
+    displayStory();
+  }
+};
+
+const highlightSelectedSymbol = (theme) => {
+  const themeContainer = document.getElementById(theme);
+  Array.from(themeContainer.children).forEach(child => {
+    if (child.textContent === selectedSymbols[theme]) {
+      child.style.backgroundColor = 'yellow';
+    } else {
+      child.style.backgroundColor = '';
+    }
+  });
+};
+
+
+    
+
+    Object.keys(themes).forEach(theme => createSymbolElements(theme));
+
+
+const storiesFinnish = {
+  "🐶🌲🍎": "Koiranpentu ja mänty nauttivat yhdessä omenoista metsässä.",
+  "🐶🌲🍌": "Koiranpentu ja mänty nauttivat yhdessä banaaneista metsässä.",
+  "🐶🌲🍔": "Koiranpentu ja mänty nauttivat yhdessä hampurilaisista metsässä.",
+  "🐶🌲🍕": "Koiranpentu ja mänty nauttivat yhdessä pizzasta metsässä.",
+  "🐶🌸🍎": "Koiranpentu ja kukka nauttivat yhdessä omenoista puutarhassa.",
+  "🐶🌸🍌": "Koiranpentu ja kukka nauttivat yhdessä banaaneista puutarhassa.",
+  "🐶🌸🍔": "Koiranpentu ja kukka nauttivat yhdessä hampurilaisista puutarhassa.",
+  "🐶🌸🍕": "Koiranpentu ja kukka nauttivat yhdessä pizzasta puutarhassa.",
+  "🐶🌼🍎": "Koiranpentu ja päivänkakkara nauttivat yhdessä omenoista niityllä.",
+  "🐶🌼🍌": "Koiranpentu ja päivänkakkara nauttivat yhdessä banaaneista niityllä.",
+  "🐶🌼🍔": "Koiranpentu ja päivänkakkara nauttivat yhdessä hampurilaisista niityllä.",
+  "🐶🌼🍕": "Koiranpentu ja päivänkakkara nauttivat yhdessä pizzasta niityllä.",
+  "🐶🍂🍎": "Koiranpentu ja syksyn lehdet nauttivat yhdessä omenoista puistossa.",
+  "🐶🍂🍌": "Koiranpentu ja syksyn lehdet nauttivat yhdessä banaaneista puistossa.",
+  "🐶🍂🍔": "Koiranpentu ja syksyn lehdet nauttivat yhdessä hampurilaisista puistossa.",
+  "🐶🍂🍕": "Koiranpentu ja syksyn lehdet nauttivat yhdessä pizzasta puistossa.",
+  "🐱🌲🍎": "Kissa ja mänty nauttivat yhdessä omenoista metsässä.",
+  "🐱🌲🍌": "Kissa ja mänty nauttivat yhdessä banaaneista metsässä.",
+  "🐱🌲🍔": "Kissa ja mänty nauttivat yhdessä hampurilaisista metsässä.",
+  "🐱🌲🍕": "Kissa ja mänty nauttivat yhdessä pizzasta metsässä.",
+  "🐱🌸🍎": "Kissa ja kukka nauttivat yhdessä omenoista puutarhassa.",
+  "🐱🌸🍌": "Kissa ja kukka nauttivat yhdessä banaaneista puutarhassa.",
+  "🐱🌸🍔": "Kissa ja kukka nauttivat yhdessä hampurilaisista puutarhassa.",
+  "🐱🌸🍕": "Kissa ja kukka nauttivat yhdessä pizzasta puutarhassa.",
+  "🐱🌼🍎": "Kissa ja päivänkakkara nauttivat yhdessä omenoista niityllä.",
+  "🐱🌼🍌": "Kissa ja päivänkakkara nauttivat yhdessä banaaneista niityllä.",
+  "🐱🌼🍔": "Kissa ja päivänkakkara nauttivat yhdessä hampurilaisista niityllä.",
+  "🐱🌼🍕": "Kissa ja päivänkakkara nauttivat yhdessä pizzasta niityllä.",
+  "🐱🍂🍎": "Kissa ja syksyn lehdet nauttivat yhdessä omenoista puistossa.",
+  "🐱🍂🍌": "Kissa ja syksyn lehdet nauttivat yhdessä banaaneista puistossa.",
+  "🐱🍂🍔": "Kissa ja syksyn lehdet nauttivat yhdessä hampurilaisista puistossa.",
+  "🐱🍂🍕": "Kissa ja syksyn lehdet nauttivat yhdessä pizzasta puistossa.",
+  "🐭🌲🍎": "Hiiri ja mänty nauttivat yhdessä omenoista metsässä.",
+  "🐭🌲🍌": "Hiiri ja mänty nauttivat yhdessä banaaneista metsässä.",
+  "🐭🌲🍔": "Hiiri ja mänty nauttivat yhdessä hampurilaisista metsässä.",
+  "🐭🌲🍕": "Hiiri ja mänty nauttivat yhdessä pizzasta metsässä.",
+  "🐭🌸🍎": "Hiiri ja kukka nauttivat yhdessä omenoista puutarhassa.",
+  "🐭🌸🍌": "Hiiri ja kukka nauttivat yhdessä banaaneista puutarhassa.",
+  "🐭🌸🍔": "Hiiri ja kukka nauttivat yhdessä hampurilaisista puutarhassa.",
+  "🐭🌸🍕": "Hiiri ja kukka nauttivat yhdessä pizzasta puutarhassa.",
+  "🐭🌼🍎": "Hiiri ja päivänkakkara nauttivat yhdessä omenoista niityllä.",
+  "🐭🌼🍌": "Hiiri ja päivänkakkara nauttivat yhdessä banaaneista niityllä.",
+  "🐭🌼🍔": "Hiiri ja päivänkakkara nauttivat yhdessä hampurilaisista niityllä.",
+  "🐭🌼🍕": "Hiiri ja päivänkakkara nauttivat yhdessä pizzasta niityllä.",
+  "🐭🍂🍎": "Hiiri ja syksyn lehdet nauttivat yhdessä omenoista puistossa.",
+  "🐭🍂🍌": "Hiiri ja syksyn lehdet nauttivat yhdessä banaaneista puistossa.",
+  "🐭🍂🍔": "Hiiri ja syksyn lehdet nauttivat yhdessä hampurilaisista puistossa.",
+  "🐭🍂🍕": "Hiiri ja syksyn lehdet nauttivat yhdessä pizzasta puistossa.",
+  "🐹🌲🍎": "Hamsteri ja mänty nauttivat yhdessä omenoista metsässä.",
+  "🐹🌲🍌": "Hamsteri ja mänty nauttivat yhdessä banaaneista metsässä.",
+  "🐹🌲🍔": "Hamsteri ja mänty nauttivat yhdessä hampurilaisista metsässä.",
+  "🐹🌲🍕": "Hamsteri ja mänty nauttivat yhdessä pizzasta metsässä.",
+  "🐹🌸🍎": "Hamsteri ja kukka nauttivat yhdessä omenoista puutarhassa.",
+  "🐹🌸🍌": "Hamsteri ja kukka nauttivat yhdessä banaaneista puutarhassa.",
+  "🐹🌸🍔": "Hamsteri ja kukka nauttivat yhdessä hampurilaisista puutarhassa.",
+  "🐹🌸🍕": "Hamsteri ja kukka nauttivat yhdessä pizzasta puutarhassa.",
+  "🐹🌼🍎": "Hamsteri ja päivänkakkara nauttivat yhdessä omenoista niityllä.",
+  "🐹🌼🍌": "Hamsteri ja päivänkakkara nauttivat yhdessä banaaneista niityllä.",
+  "🐹🌼🍔": "Hamsteri ja päivänkakkara nauttivat yhdessä hampurilaisista niityllä.",
+  "🐹🌼🍕": "Hamsteri ja päivänkakkara nauttivat yhdessä pizzasta niityllä.",
+  "🐹🍂🍎": "Hamsteri ja syksyn lehdet nauttivat yhdessä omenoista puistossa.",
+  "🐹🍂🍌": "Hamsteri ja syksyn lehdet nauttivat yhdessä banaaneista puistossa.",
+  "🐹🍂🍔": "Hamsteri ja syksyn lehdet nauttivat yhdessä hampurilaisista puistossa.",
+  "🐹🍂🍕": "Hamsteri ja syksyn lehdet nauttivat yhdessä pizzasta puistossa."
+};
+
+let currentLanguage = 'en';
+
+const switchLanguage = () => {
+  currentLanguage = currentLanguage === 'en' ? 'fi' : 'en';
+  document.getElementById('switch-btn').textContent = currentLanguage === 'en' ? 'Switch to Finnish' : 'Switch to English';
+  document.querySelector('h1').textContent = currentLanguage === 'en' ? 'Select Your Symbols' : 'Valitse Symbolit';
+  if (Object.values(selectedSymbols).every(val => val !== '')) {
+    displayStory();
+  }
+};
+
+document.body.insertAdjacentHTML('beforeend', '<button id="switch-btn" onclick="switchLanguage()">Switch to Finnish</button>');
+
+
+const displayStory = () => {
+  const key = Object.values(selectedSymbols).join('');
+  if (currentLanguage === 'en') {
+    document.getElementById('story').textContent = stories[key] ;
+  } else {
+    document.getElementById('story').textContent = storiesFinnish[key] ;}
+
+  if (currentLanguage === 'en') {
+    document.getElementById('story').textContent = stories[key] || "An unexpected adventure unfolds!";
+  } else {
+    document.getElementById('story').textContent = storiesFinnish[key] || "Odottamaton seikkailu alkaa!";
+  }
+};
+
+
+
+  </script>
+</body>
+</html>

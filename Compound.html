@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<!-- game created by Teppo Särkkä-->
+<html>
+<head>
+    <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333333;
+    }
+
+    #container {
+      width: 600px;
+      margin: 0 auto;
+      border: 1px solid #cccccc;
+      padding: 20px;
+      background-color: #ffffff;
+    }
+
+    #output {
+      height: 200px;
+      border: 1px solid #cccccc;
+      padding: 10px;
+      overflow-y: scroll;
+    }
+
+    #input {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    #word1, #word2 {
+      width: 200px;
+      height: 40px;
+      font-size: 20px;
+      border: none;
+      background-color: #eeeeee;
+    }
+
+    #combine {
+      width: 100px;
+      height: 40px;
+      font-size: 20px;
+      border: none;
+      background-color: #66cc66;
+      color: #ffffff;
+    }
+
+    #score {
+      font-size: 20px;
+      color: #333333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Finnish Compound Word Game</h1>
+  <div id="container">
+    <div id="output"></div>
+    <div id="input">
+      <button id="word1"></button>
+      <button id="combine">Yhdistä</button>
+      <button id="word2"></button>
+    </div>
+    <p id="score">Pisteet: 0 </p>
+  </div>
+  <script>
+    // An array of Finnish words
+    // An array of Finnish words
+const words = ["kala", "kauppa", "koulu", "kirja", "auto", "tie", "talo", "viikko", "kello", "sana", "kirja", "vesi", "putous", "laulu", "kilpailu", "koira", "hevonen", "kenkä", "keinu", "puu", "tarha", "joki", "varsi", "meri", "maisema", "järvi", "vuori", "retki", "taivas", "tähti", "pilvi", "aurinko", "sade", "varjo", "lasi", "puoli", "kuu"];
+
+
+    // An array of Finnish compound words
+    const compounds = ["kalakauppa", "autokauppa", "järvimaisema", "kirjakauppa", "koulukirja", "autotie", "aurinkokello", "sanakirja", "vesiputous", "retkikenkä", "laulukilpailu", "puutalo", "keinuhevonen", "puutarha", "jokivarsi", "merimaisema", "puukenkä", "sadepilvi", "tähtitaivas", "aurinkovarjo", "puolikuu"];
+    // A set to store the used compound words
+    const used = new Set();
+
+    // A variable to store the current score
+    let score = 0;
+
+  function createWordCycler(words) {
+  var index = 0;
+  return function() {
+    var word = words[index];
+    index = (index + 1) % words.length;
+    return word;
+  }
+}
+
+var getRandomWord = createWordCycler( ["kala", "kauppa", "koulu", "kirja", "auto", "tie", "talo", "viikko", "kello", "sana", "kirja", "vesi", "putous", "laulu", "kilpailu", "koira", "hevonen", "kenkä", "keinu", "puu", "tarha", "joki", "varsi", "meri", "maisema", "järvi", "vuori", "retki", "taivas", "tähti", "pilvi", "aurinko", "sade", "varjo", "lasi", "puoli", "kuu"]
+);
+
+
+    // A function to update the score and display it
+    function updateScore() {
+      score++; // Increment the score by one
+      document.getElementById("score").textContent = `Pisteet: ${score} `; // Display the score in the score paragraph
+      if (score == 30) { // If the score is 30, end the game
+        displayMessage("Onneksi olkoon! Olet löytänyt kaikki yhdyssanat ja voittanut pelin! You've found them all and won the game!");
+        document.getElementById("combine").disabled = true; // Disable the combine button
+        document.getElementById("word1").disabled = true; // Disable the word1 button
+        document.getElementById("word2").disabled = true; // Disable the word2 button
+      }
+    }
+
+    // A function to display a message in the output div
+    function displayMessage(message) {
+      let p = document.createElement("p");
+      p.textContent = message;
+      document.getElementById("output").appendChild(p);
+      document.getElementById("output").scrollTop = document.getElementById("output").scrollHeight;
+    }
+
+    // A function to check if the combination of two words is a valid compound word
+    function checkCombination(word1, word2) {
+      let combination = word1 + word2; // Concatenate the two words
+      if (compounds.includes(combination)) { // Check if the combination is in the compounds array
+        if (used.has(combination)) { // Check if the combination has been used before
+          displayMessage(`Olet jo käyttänyt sanaa ${combination}. You have already used the word.`);
+        } else { // If not, add it to the used set and update the score
+          used.add(combination);
+          updateScore();
+          displayMessage(`Hyvä! ${combination} on oikea yhdyssana. It's a correct word.`);
+        }
+      } else { // If the combination is not a valid compound word, display a message
+        displayMessage(`Ei, ${combination} ei ole oikea yhdyssana. Incorrect word.`);
+      }
+    }
+
+    // A function to start the game
+    function startGame() {
+      // Display a welcome message
+      displayMessage("Tervetuloa suomen yhdyssanapeliin! Welcome to finnish compound word game!");
+      displayMessage("Sinun tehtäväsi on yhdistää kaksi sanaa yhdeksi yhdyssanaksi. Your task is to combine two words into one.");
+      displayMessage("Voit yhdistää sanat painamalla Yhdistä-painiketta. You can combine the words by pressing the yhdistä-button.");
+      displayMessage("Saat pisteen jokaisesta oikeasta yhdyssanasta. You get one point from each correct compound word.");
+      displayMessage("The game may contain errors and it can be hard if you don't know many finnish words.");
+
+      // Get the buttons from the document
+      let word1 = document.getElementById("word1");
+      let word2 = document.getElementById("word2");
+      let combine = document.getElementById("combine");
+
+      // Set the initial words for the buttons
+      word1.textContent = getRandomWord();
+      word2.textContent = getRandomWord();
+
+      // Add an event listener for the combine button
+      combine.addEventListener("click", function() {
+        // Check the combination of the two words
+        checkCombination(word1.textContent, word2.textContent);
+        // Get new words for the buttons
+        word1.textContent = getRandomWord();
+        word2.textContent = getRandomWord();
+      });
+
+      // Add an event listener for the word1 button
+      word1.addEventListener("click", function() {
+        // Get a new word for the button
+        word1.textContent = getRandomWord();
+      });
+
+      // Add an event listener for the word2 button
+      word2.addEventListener("click", function() {
+        // Get a new word for the button
+        word2.textContent = getRandomWord();
+      });
+    }
+
+    // Call the startGame function when the document is loaded
+    window.onload = startGame;
+  </script>
+</body>
+</html>
+

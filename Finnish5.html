@@ -1,0 +1,677 @@
+
+<!-- game created by Teppo Särkkä-->
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Finnish Game</title>
+    <style>
+#game {
+    width: 600px;
+    margin: auto;
+    font-family: Arial, sans-serif;
+}
+
+#question {
+    margin: 20px;
+}
+
+#question h2 {
+    color: blue;
+}
+
+button {
+    width: 160px;
+    height: 60px;
+    margin: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: lightblue;
+}
+
+#feedback {
+    margin: 20px;
+    font-weight: bold;
+}
+
+#score {
+    margin: 20px;
+}
+
+#timer {
+    margin: 20px;
+}
+
+</style>
+</head>
+<body>
+    <div id="game">
+        <h1>Tervetuloa! (Welcome!)</h1>
+        <p>This is a text-based game that teaches you some basic Finnish words. You will see a word in English and four options in Finnish. Click the button that matches the correct translation if there is one. Otherwise you may select Skip Word. You have 10 seconds to answer each question. Onnea! (Good luck!)</p>
+        <div id="question">
+            <h2>Question</h2>
+                </div>
+            
+            <button id="option1"></button>
+            <button id="option2"></button>
+            <button id="option3"></button>
+            <button id="option4"></button>
+        
+            <br><br><br><br>
+                 <button id="skip">SKIP WORD</button>
+        <div id="feedback">Feedback</div>
+        <div id="score"></div>
+        <div id="timer"></div>
+    </div>
+    <script>
+        
+    
+window.onload = () => {
+
+alert("pause");
+function random(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
+}
+console.log(random(0,5));
+// An array of objects that store the English word and the Finnish translation
+
+    var words = [
+    {en:"Sorry",fi: "Anteeksi"},
+ 
+  {en:"How are you?",fi: "Mitä kuuluu?"},
+  {en:"Fine, thanks",fi: "Hyvää, kiitos"},
+  {en:"What is your name?",fi: "Mikä sinun nimesi on?"},
+  {en:"My name is...",fi: "Minun nimeni on..."},
+  {en:"Where are you from?",fi: "Mistä olet kotoisin?"},
+  {en:"I'm from...",fi: "Olen kotoisin..."},
+  {en:"Do you speak Finnish?",fi: "Puhutko suomea?"},
+  {en:"I speak a little Finnish",fi: "Puhun vähän suomea"},
+  {en:"I don't speak Finnish",fi: "En puhu suomea"},
+  {en:"Can you help me?",fi: "Voitko auttaa minua?"},
+  {en:"I need...",fi: "Tarvitsen..."},
+  {en:"Where is...",fi: "Missä on..."},
+    {en: "Hello", fi: "Hei"},
+    {en: "Goodbye", fi: "Hyvästi"},
+    {en: "Thank you", fi: "Kiitos"},
+    
+    {en: "Yes", fi: "Kyllä"},
+    {en: "No", fi: "Ei"},
+    {en: "Maybe", fi: "Ehkä"},
+    {en: "I", fi: "Minä"},
+    {en: "You", fi: "Sinä"},
+    {en: "He/She/It", fi: "Hän/se"},
+    // Added 90 more words below
+    {en: "We", fi: "Me"},
+    {en: "They", fi: "He"},
+    {en: "This", fi: "Tämä"},
+    {en: "That", fi: "Tuo"},
+    {en: "Here", fi: "Täällä"},
+    {en: "There", fi: "Tuolla"},
+    {en: "Who", fi: "Kuka"},
+    {en: "What", fi: "Mikä"},
+    {en: "Where", fi: "Missä"},
+    {en: "When", fi: "Milloin"},
+    {en: "Why", fi: "Miksi"},
+    {en: "How", fi: "Miten"},
+    {en: "Which", fi: "Mikä/Minkä/Mitä"},
+    {en: "How much/many", fi: "Kuinka paljon/monta"},
+    {en: "Name", fi: "Nimi"},
+    {en: "Age", fi: "Ikä"},
+    {en: "Country", fi: "Maa"},
+    {en: "City", fi: "Kaupunki"},
+    {en: "Language", fi: "Kieli"},
+    {en: "Friend", fi: "Ystävä/Kaveri"}, 
+    {en: "Family", fi:"Perhe"}, 
+    {en:"Mother",fi:"Äiti"}, 
+    {en:"Father",fi:"Isä"}, 
+    {en:"Sister",fi:"Sisko"}, 
+    {en:"Brother",fi:"Veli"}, 
+    {en:"Daughter",fi:"Tytär"}, 
+    {en:"Son",fi:"Poika"}, 
+    {en:"Husband/Wife/Spouse",fi:"Aviomies/Vaimo/Puoliso"},
+    {en: "Dog", fi: "Koira"},
+
+    {en: "Cat", fi: "Kissa"},
+
+    {en: "Bird", fi: "Lintu"},
+
+    {en: "Fish", fi: "Kala"},
+
+    {en: "Tree", fi: "Puu"},
+
+    {en: "Flower", fi: "Kukka"},
+
+    {en: "Book", fi: "Kirja"},
+
+    {en: "Pen", fi: "Kynä"},
+
+    {en: "Paper", fi: "Paperi"},
+
+    {en: "Water", fi: "Vesi"},
+
+    {en: "Fire", fi: "Tuli"},
+
+    {en: "Earth", fi: "Maa"},
+
+    {en: "Air", fi: "Ilma"},
+
+    {en: "Sun", fi: "Aurinko"},
+
+    {en: "Moon", fi: "Kuu"},
+
+    {en: "Star", fi: "Tähti"},
+
+    {en: "Sky", fi: "Taivas"},
+
+    {en: "Cloud", fi: "Pilvi"},
+
+    {en: "Rain", fi: "Sade"},
+
+    {en: "Snow", fi: "Lumi"},
+
+    {en: "Ice", fi: "Jää"},
+
+    {en: "Wind", fi: "Tuuli"},
+
+    {en: "Storm", fi: "Myrsky"},
+
+    {en: "Lightning", fi: "Salama"},
+
+    {en: "Thunder", fi: "Ukkonen"},
+
+    {en: "House", fi: "Talo"},
+
+    {en: "Room", fi: "Huone"},
+
+    {en: "Door", fi: "Ovi"},
+
+    {en: "Window", fi: "Ikkuna"},
+
+    {en: "Chair", fi: "Tuoli"},
+
+    {en: "Table", fi: "Pöytä"},
+
+    {en: "Bed", fi: "Sänky"},
+
+    {en: "Sofa", fi: "Soiva"},
+
+    {en: "Lamp", fi:"Lamppu"}, 
+
+    {en:"Clock" ,fi:"Kello"}, 
+
+    {en:"Phone" ,fi:"Puhelin"}, 
+
+    {en:"Computer" ,fi:"Tietokone"}, 
+
+    {en:"Keyboard" ,fi:"Näppäimistö"}, 
+
+    {en:"Mouse" ,fi:"Hiiri"}, 
+
+    {en:"Screen" ,fi:"Näyttö"}, 
+
+    {en:"Car" ,fi:"Auto"}, 
+
+    {en:"Bike" ,fi:"Pyörä"}, 
+
+    {en:"Bus" ,fi:"Bussi"}, 
+
+    {en:"Train" ,fi:"Juna"}, 
+
+    {en:"Plane" ,fi:"Lentokone"}, 
+
+    {en:"Boat" ,fi:"Vene"}, 
+
+    {en:"Road" ,fi:"Tie"}, 
+
+    {en:"Bridge" ,fi:"Silta"}, 
+
+    {en:"River" ,fi:"Joki"}, 
+
+    {en:"Lake" ,fi:"Järvi"}, 
+
+    {en:"Sea" ,fi:"Meri"}, 
+
+    {en:"Mountain" ,fi:"Vuori"}, 
+
+    {en:"Hill" ,fi:"Mäki"}, 
+
+    {en:"Valley" ,fi:"Laakso"}, 
+
+    {en:"Forest" ,fi:"Metsä"}, 
+
+    {en:"Field" ,fi:"Pelto"}, 
+
+    {en:"Farm" ,fi:"Maatila"}, 
+
+   { en :  'City'  ,  fi :  'Kaupunki'  } ,
+
+   {
+
+     en :  'Town'  ,
+
+     fi :  'Kaupunki'  
+
+   } ,
+
+   {
+
+     en :  'Village'  ,
+
+     fi :  'Kylä'  
+
+   } ,
+
+   {
+
+     en :  'School'  ,
+
+     fi :  'Koulu'  
+
+   } ,
+
+   {
+
+     en :  'Hospital'  ,
+
+     fi :  'Sairaala'  
+
+   } ,
+
+   {
+
+     en :  'Shop'  ,
+
+     fi :  'Kauppa'  
+
+   } ,
+
+   {
+
+     en :  'Restaurant'  ,
+
+     fi :  'Ravintola'  
+
+   } ,
+
+   {
+
+     en :  'Hotel'  ,
+
+     fi :  'Hotelli'  
+
+   } ,
+
+   {
+
+     en :  'Bank'  ,
+
+     fi :  'Pankki'  
+
+   } ,
+
+   {
+
+     en :  'Police'  ,
+
+     fi :  'Poliisi'  
+
+   } ,
+
+   {
+
+     en :  'Doctor'  ,
+
+     fi :  'Lääkäri'  
+
+   } ,
+
+   {
+
+     en :  'Teacher'  ,
+
+     fi :  'Opettaja'  
+
+   } ,
+
+   {
+
+     en :  'Student'  ,
+
+     fi :  'Opiskelija'  
+
+   } ,
+
+   {
+
+     en :  'Child'  ,
+
+     fi :  'Lapsi'  
+
+   } ,
+
+   {
+
+     en :  'Parent'  ,
+
+     fi :  'Vanhempi'  
+
+   } ,
+
+   {
+
+     en :  'Friend'  ,
+
+     fi :  'Ystävä'  
+
+   } ,
+
+   {
+
+     en :  'Name'  ,
+
+     fi :  'Nimi'  
+
+   } ,
+
+   {
+
+     en :  'Age'  ,
+
+     fi :  'Ikä'  
+
+   } ,
+
+   {
+
+     en :  'Birthday'  ,
+
+     fi :  'Syntymäpäivä'  
+
+   } ,
+
+   {
+
+     en :  'Color'  ,
+
+     fi :  'Väri'  
+
+   } ,
+
+   {
+
+     en :  'Red'  ,
+
+     fi :  'Punainen'  
+
+   } ,
+
+   {
+
+     en :  'Blue'  ,
+
+     fi :  'Sininen'  
+
+   } ,
+
+   {
+
+     en :  'Green'  ,
+
+     fi :  'Vihreä'  
+
+   } , 
+
+    {en: "Yellow", fi: "Keltainen"},
+
+    {en: "Black", fi: "Musta"},
+
+    {en: "White", fi: "Valkoinen"},
+
+    {en: "Brown", fi: "Ruskea"},
+
+    {en: "Pink", fi: "Vaaleanpunainen"},
+
+    {en: "Purple", fi: "Violetti"},
+
+    {en: "Orange", fi: "Oranssi"},
+
+    {en: "Gray", fi: "Harmaa"}
+
+    
+];
+
+ let shuffled = [];   
+
+    
+var i = 0; var j; var temp; let indexes;
+
+console.log(words[i].fi);
+// A variable to store the current question index
+var current = 0;
+
+// A variable to store the user's score
+var score = 0;
+
+// A variable to store the timer
+var timer = 10;
+
+// A variable to store the interval function
+var interval;
+
+// Get the HTML elements by their IDs
+var question = document.getElementById("question");
+var option1 = document.getElementById("option1");
+var option2 = document.getElementById("option2");
+var option3 = document.getElementById("option3");
+var option4 = document.getElementById("option4");
+var feedback = document.getElementById("feedback");
+var scoreDiv = document.getElementById("score");
+var timerDiv = document.getElementById("timer");
+var skip = document.getElementById("skip");
+
+// Add event listeners to the buttons
+option1.addEventListener("click", checkAnswer);
+option2.addEventListener("click", checkAnswer);
+option3.addEventListener("click", checkAnswer);
+option4.addEventListener("click", checkAnswer);
+skip.addEventListener("click", skipWord);
+
+// Start the game
+startGame();
+
+
+function skipWord(){ 
+
+current++
+
+    // Reset the timer
+    timer = 10;
+
+showQuestion();
+}
+// A function to start the game
+function startGame() {
+    // Shuffle the words array
+   // shuffle(words);
+  
+
+    // Reset the current question index, score and timer
+    current = 0;
+    score = 0;
+    timer = 10;
+    
+
+    // Update the score and timer display
+    scoreDiv.innerHTML = "Score: " + score;
+    timerDiv.innerHTML = "Time left: " + timer + "s";
+
+    // Start the timer
+    interval = setInterval(updateTimer, 1000);
+
+    // Show the first question
+    showQuestion();
+}
+
+
+
+// A function to show a question
+function showQuestion() {
+    // Check if there are more questions
+    if (current < words.length) {
+        // Get the current word object
+        var word = words[current];
+
+        // Update the question display
+        question.innerHTML = "<h2>Question " + current + ": " + word.en + "</h2>";
+console.log("current: " + current);
+        // Generate four random indexes for the options
+        indexes = [current];
+        while (indexes.length < 4) {
+            var rando = Math.floor(Math.random() * words.length);
+            if (!indexes.includes(rando)) {
+                indexes.push(rando);
+            }
+            if (!indexes.includes(current)){showQuestion()}
+        }
+
+       // Shuffle the indexes array
+      shuffle(indexes);
+console.log("indexes array: " + indexes);
+        // Update the options display with the Finnish translations
+        let a = random(0,3);
+        option1.innerHTML = words[indexes[a]].fi;
+        option1.value = indexes[a];
+        a = random(0,3);
+        option2.innerHTML = words[indexes[a]].fi;
+        option2.value = indexes[a];
+         a = random(0,3);
+        option3.innerHTML = words[indexes[a]].fi;
+        option3.value = indexes[a];
+         a = random(0,3);
+        option4.innerHTML = words[indexes[a]].fi;
+        option4.value = indexes[a];
+
+            console.log("option1 innerhtml: " + option1.innerHTML);
+            console.log("option1 value: " + option1.value);
+            
+            console.log("option2 innerhtml: " + option2.innerHTML);
+            console.log("option2 value: " + option2.value);
+        // Clear the feedback display
+       // feedback.innerHTML = "";
+    } else {
+        // End the game
+      endGame();
+    }
+}
+// fix function**
+   function shuffle(words) {
+  // Loop through the array from the end to the beginning
+  for (var i = words.length - 1; i > 0; i--) {
+    // Pick a random index from 0 to i
+    var j = Math.floor(Math.random() * (i + 1));
+    // Swap the elements at i and j
+    var temp = words[i].fi; // i on property ja value
+    
+    
+    words[i].fi = words[j].fi;
+    words[j].fi = temp;
+  }
+  // Return the shuffled array
+  return words;
+  
+} 
+    
+// A function to check the user's answer
+function checkAnswer(event) {
+    // Get the button that was clicked
+    var button = event.target;
+
+    // Get the index of the chosen option
+    var chosen = parseInt(button.value);
+ console.log("Answer index: " + chosen);
+    // Get the index of the correct answer
+    var correct = current;
+
+    // Check if the chosen option matches the correct answer
+    if (chosen === correct) {
+        // Increase the score by one
+        score++;
+
+        // Update the score display
+        scoreDiv.innerHTML = "Score: " + score ;
+
+        // Show a positive feedback message
+        feedback.innerHTML = "Oikein! (Correct!)";
+    } else {
+        // Show a negative feedback message with the correct answer
+        feedback.innerHTML = "Väärin! (Wrong!) The correct answer is: " + words[correct].fi;
+    }
+console.log(feedback.innerHTML);
+    // Move to the next question
+    current++
+
+    // Reset the timer
+    timer = 10;
+
+    // Show the next question
+    showQuestion();
+}
+
+// A function to update the timer
+function updateTimer() {
+    // Decrease the timer by one second
+    timer--;
+
+    // Update the timer display
+    timerDiv.innerHTML = "Time left: " + timer + "s";
+
+    // Check if the timer reaches zero
+    if (timer === 0) {
+        feedback.innerHTML = "Aika loppui. Time is up. Correct answer is " + words[current].fi;
+        
+        
+        // Show a negative feedback message with the correct answer
+       
+
+        // Move to the next question
+        current++;
+
+        // Reset the timer
+        timer = 10;
+
+        // Show the next question
+        showQuestion();
+    }
+}
+
+// A function to end the game
+function endGame() {
+    // Stop the timer
+    clearInterval(interval);
+
+    // Hide the question and options display
+    question.style.display = "none";
+
+    // Show a final message with the score and a restart button
+    feedback.innerHTML = "Peli on ohi! (The game is over!) Your score is " + score ;
+    feedback.innerHTML += "<br><button id='restart'>Aloita uudelleen (Restart)</button>";
+
+    // Get the restart button by its ID and add an event listener to it
+    var restart = document.getElementById("restart");
+    restart.addEventListener("click", restartGame);
+}
+
+// A function to restart the game
+function restartGame() {
+    // Show the question and options display again
+    question.style.display = "block";
+feedback.innerHTML = "";
+    // Start the game again
+    startGame();
+}
+}
+</script>
+</body>
+</html>
