@@ -1,0 +1,231 @@
+<!-- game created by Teppo Särkkä-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Finnish Partitive Game</title>
+    <style>
+#game {
+    width: 800px;
+    margin: auto;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+p {
+    font-size: 18px;
+}
+
+#question {
+    margin-top: 20px;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+#text {
+    font-weight: bold;
+}
+
+button {
+    width: 200px;
+    height: 50px;
+    margin: 5px;
+}
+
+#feedback {
+    color: green;
+    font-style: italic;
+}
+
+#score {
+    margin-top: 20px;
+    text-align: center;
+}
+
+
+
+</style>
+</head>
+<body>
+    <div id="game">
+        <h1>Finnish Partitive Game</h1>
+        <p>In this game, you will learn how to use the partitive case in Finnish. The partitive case is used to express a part or quantity of something, such as after numbers, words of quantity, mass nouns, negative sentences, irresultative phrases, partitive verbs, and prepositions. The exactness of explanations is not guaranteed because of AI. </p>
+       
+        <div id="question">
+            <p id="text">How do you say "I have two cats" in Finnish?</p>
+            <button id="a" onclick = "showCorrect()">A: Minulla on kaksi kissaa.</button>
+            <button id="b"onclick = "showCorrect()">B: Minulla on kaksi kissat.</button>
+            <button id="c" onclick = "showCorrect()">C: Minulla on kaksi kissan.</button>
+            <button id="d" onclick = "showCorrect()">D: Minulla on kaksi kissassa.</button>
+            <button id="next" onclick = "showNext()">Next question</button>
+            <p id="feedback"></p>
+        </div>
+       
+            
+        
+    </div>
+    <body>
+        <script>
+
+let current = 0;
+
+function showCorrect(){
+    
+feedback.innerHTML = "Correct answer: " + questions[current].correct + "<br><br>" + questions[current].explanation ;
+console.log("button" + "current " + current);      
+     }
+function showNext(){ 
+
+
+feedback.innerHTML="";
+current++;
+a.innerHTML = "A: " + questions[current].a;
+b.innerHTML = "B: " + questions[current].b;
+c.innerHTML = "C: " + questions[current].c;
+d.innerHTML = "D: " + questions[current].d;
+text.innerHTML = questions[current].text;
+
+}
+// An array of objects that store the questions, answers, and explanations
+var questions = [
+    {
+        text: "How do you say \"I have two cats\" in Finnish?",
+        a: "Minulla on kaksi kissaa.",
+        b: "Minulla on kaksi kissat.",
+        c: "Minulla on kaksi kissan.",
+        d: "Minulla on kaksi kissassa.",
+        correct: "a",
+        explanation: "The partitive is used after numbers, except number 1. The partitive ending for words ending in a single vowel is -a/-ä."
+    },
+    {
+        text: "How do you say \"She likes coffee\" in Finnish?",
+        a: "Hän pitää kahvi.",
+        b: "Hän pitää kahvissa.",
+        c: "Hän pitää kahvista",
+        d: "Hän pitää kahvin.",
+        correct: "c",
+        explanation: "The partitive is used with mass nouns, such as liquids and substances. The partitive ending for words ending in a single vowel is -a/-ä."
+    },
+    {
+        text: "How do you say \"He doesn't have a car\" in Finnish?",
+        a: "Hänellä ei ole autoa.",
+        b: "Hänellä ei ole auto.",
+        c: "Hänellä ei ole auton.",
+        d: "Hänellä ei ole autossa.",
+        correct: "a",
+        explanation: "The partitive is used with negative sentences, to indicate that the action or state is not completed or does not affect the whole object. The partitive ending for words ending in a single vowel is -a/-ä."
+    },
+    {
+        text: "How do you say \"I read a book\" in Finnish?",
+        a: "Minä luen kirja.",
+        b: "Minä luen kirjaa.",
+        c: "Minä luen kirjalla.",
+        d: "Minä luen kirjassa.",
+        correct: "b",
+        explanation: "The partitive is used with irresultative phrases, to indicate that the action is incomplete or ongoing. The partitive ending for words ending in a single vowel is -a/-ä."
+    },
+  
+    {
+        text: "How do you say \"He lives in Finland\" in Finnish?",
+        a: "Hän asuu Suomi.",
+        b: "Hän asuu Suomessa.",
+        c: "Hän asuu Suomea.",
+        d: "Hän asuu Suomen.",
+        correct: "b",
+        explanation: "The partitive is used with some prepositions, such as in (in), from (from), and without (without). The partitive ending for words ending in i is -a/-ä, but the i changes to e."
+    },
+    {
+        text: "How do you say \"I bought a kilo of apples\" in Finnish?",
+        a: "Minä ostin kilo omenat.",
+        b: "Minä ostin kilon omenat.",
+        c: "Minä ostin kilo omenaa.",
+        d: "Minä ostin kilon omenaa.",
+        correct: "d",
+        explanation: "The partitive is used after words that express a quantity, such as units of measurement. The word of quantity is inflected in the genitive case, and the word that follows it is inflected in the partitive case. The genitive ending for words ending in o is -n, and the partitive ending for words ending in a single vowel is -a/-ä."
+    },
+    {
+        text: "How do you say \"She studies languages\" in Finnish?",
+        a: "Hän opiskelee kieliä.",
+        b: "Hän opiskelee kieltä.",
+        c: "Hän opiskelee kieli.",
+        d: "Hän opiskelee kielten.",
+        correct: "a",
+        explanation: "The partitive is used with plural nouns to indicate an indefinite or unspecified quantity. The partitive plural ending for words ending in i is -ia/-iä, but the i changes to e."
+    },
+    {
+        text: "How do you say \"He likes beautiful flowers\" in Finnish?",
+        a: "Hän pitää kaunis kukat.",
+        b: "Hän pitää kaunista kukkaa.",
+        c: "Hän pitää kauniista kukista",
+        d: "Hän pitää kauniin kukat.",
+        correct: "c",
+        explanation: "The partitive is used with adjectives that modify nouns in the partitive case. The adjective has to agree with the noun in number and case. The partitive plural ending for adjectives ending in two different vowels is -ia/-iä."
+    },
+    {
+        text: "How do you say \"They have a big house\" in Finnish?",
+        a: "Heillä on iso talo.",
+        b: "Heillä on iso taloa.",
+        c: "Heillä on isoa taloa.",
+        d: "Heillä on isoa talo.",
+        correct: "a",
+        explanation: "The partitive is not used with singular nouns that indicate a definite or specific quantity. In this case, the noun and the adjective are inflected in the nominative case. The nominative ending for words ending in o is -o/-ö."
+    },
+    
+    {
+    text: "How do you say \"I have three dogs\" in Finnish?",
+    a: "Minulla on kolme koiraa.",
+    b: "Minulla on kolme koira.",
+    c: "Minulla on kolme koirat.",
+    d: "Minulla on kolme koiran.",
+    correct: "a",
+    explanation: "The partitive is used after numbers, except number 1. The partitive ending for words ending in a single vowel is -a/-ä."
+},
+{
+    text: "How do you say \"Can I borrow the book?\" in Finnish?",
+    a: "Saanko lainata kirjaa?",
+    b: "Saanko lainata kirjalla?",
+    c: "Saanko lainata kirjat?",
+    d: "Saanko lainata kirjanen?",
+    correct: "a",
+    explanation: "The partitive case is used for tentative inquiries. 'Saanko lainata kirjaa?' means 'Can I borrow the book?'."
+},
+{
+    text: "How do you say \"There is milk in the glass\" in Finnish?",
+    a: "Lasissa on maitoa.",
+    b: "Lasissa on maitolla.",
+    c: "Lasissa on maitot.",
+    d: "Lasissa on maiton.",
+    correct: "a",
+    explanation: "The partitive case is used for uncountable nouns. 'Lasissa on maitoa.' means 'There is milk in the glass'."
+},
+{
+    text: "How do you say \"There is no book in the house\" in Finnish?",
+    a: "Talossa ei ole kirjaa.",
+    b: "Talossa ei ole kirjan.",
+    c: "Talossa ei ole kirjat.",
+    d: "Talossa ei ole kirjoja.",
+    correct: "a",
+    explanation: "The partitive case is used for negative statements. 'Talossa ei ole kirjaa.' means 'There is no book in the house'."
+}
+
+
+
+
+];
+
+// Variables to store the HTML elements
+var text = document.getElementById("text");
+var a = document.getElementById("a");
+var b = document.getElementById("b");
+var c = document.getElementById("c");
+var d = document.getElementById("d");
+var next = document.getElementById("next");
+var feedback = document.getElementById("feedback");
+
+
+</script>
+    </body>
+        </html>
